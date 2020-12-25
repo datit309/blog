@@ -1,0 +1,119 @@
+<% include ../layout/header %>
+    <!-- Left Panel -->
+    <% include ../layout/menu %>
+        <!-- Right Panel -->
+        <div id="right-panel" class="right-panel">
+            <!-- Header-->
+            <% include ../layout/navbar %>
+                <!-- Content -->
+
+                <div class="content">
+                    <div class="animated fadeIn">
+
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-12">
+                                <div class="card">
+
+                                    <% if(success_msg != ''){ %>
+                                        <div class="alert alert-success">
+                                            <%= success_msg%>
+                                        </div>
+                                        <% } %>
+                                            <% if(error_msg != ''){ %>
+                                                <div class="alert alert-danger">
+                                                    <%= error_msg%>
+                                                </div>
+                                                <% } %>
+                                                    <% if(errors) { %>
+                                                        <div class="alert alert-danger">
+                                                            <% errors.forEach(function(e){ %>
+                                                                <%= e.msg %> <br/>
+                                                                    <%});%>
+                                                        </div>
+                                                        <% };%>
+                                                            <table width="100%" class="table table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Title</th>
+                                                                        <th>Description</th>
+
+                                                                        <th>Child</th>
+                                                                        <th>#</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                    <% if(list) { list.forEach(item => { %>
+
+                                                                        <!-- <% //if(item.parent){ %> -->
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="checkbox" name="<%= item.id %>">
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= item.name %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= item.description %>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <%= item.parent %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="./update/<%= item.id %>">
+                                                                                    <li class="fa fa-pencil"></li>
+                                                                                </a> |
+                                                                                <a href="./delete/<%= item.id %>">
+                                                                                    <li class="fa fa-trash"></li>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <% listparent.forEach(item => { %>
+                                                                            <% if(item.parent_id==item.id){ %>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= item.parent_id %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%= item.name %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%= item.description %>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        empty
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <a href="./update/<%= item.id %>">
+                                                                                            <li class="fa fa-pencil"></li>
+                                                                                        </a> |
+                                                                                        <a href="./delete/<%= item.id %>">
+                                                                                            <li class="fa fa-trash"></li>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <% }}); %>
+                                                                                    <% }); } else { %>
+                                                                                        khong co du lieu
+                                                                                        <% } %>
+                                                                </tbody>
+                                                            </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- .animated -->
+                </div>
+
+                <!-- .content -->
+                <div class="clearfix"></div>
+
+                <% include ../layout/footer %>

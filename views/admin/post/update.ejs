@@ -1,0 +1,99 @@
+<% include ../layout/header %>
+    <!-- Left Panel -->
+    <% include ../layout/menu %>
+        <!-- Right Panel -->
+        <div id="right-panel" class="right-panel">
+            <!-- Header-->
+            <% include ../layout/navbar %>
+                <!-- Content -->
+
+                <div class="content">
+                    <div class="animated fadeIn">
+
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Update Post</strong>
+                                    </div>
+                                    <% if(success_msg != ''){ %>
+                                        <div class="alert alert-success">
+                                            <%= success_msg%>
+                                        </div>
+                                        <% } %>
+                                            <% if(errors) { %>
+                                                <div class="alert alert-danger">
+                                                    <% errors.forEach(function(e){ %>
+                                                        <%= e.msg %> <br/>
+                                                            <%});%>
+                                                </div>
+                                                <% };%>
+                                                    <form method="POST" enctype="multipart/form-data">
+                                                        <div class="card-body card-block">
+                                                            <div class="form-group">
+                                                                <label class=" form-control-label">Title</label>
+                                                                <div class="input-group">
+                                                                    <input required value="<%= result.post_title %>" type="text" name="post_title" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class=" form-control-label">Content</label>
+                                                                <textarea required class="form-control" name="post_content" cols="10" rows="5">
+                                                    <%= result.post_content %>
+                                                </textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class=" form-control-label">Categories</label>
+                                                                <div class="input-group">
+                                                                    <select class="form-control" name="post_categories">
+                                                                        <% listcate.forEach(function(item){ %> 
+                                                                            <option value="<%= item._id%>" <%= (item._id == result.post_categories.cate_id) ? 'selected=\"selected\"' : ''%> ><%= item.cate_title%></option>
+                                                                        <%})%>
+                                                                        
+                                                            </select>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class=" form-control-label">Tag</label>
+                                                                <div class="input-group">
+                                                                    <input required value="<%= result.post_tags %>" type="text" name="post_tags" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class=" form-control-label">Thumnail</label>
+
+                                                                <div class="input-group">
+                                                                    <input name="post_thumbnail" type="file" class="form-control" onchange="loadFile(event)">
+                                                                    <input hidden="true" value="<%= result.post_thumbnail %>" type="text" name="post_thumbnailtemp" class="form-control">
+                                                                    <input hidden="true" value="<%= result.post_image %>" type="text" name="post_thumbnailtemp1" class="form-control">
+                                                                </div>
+                                                                <img id="thumbnail" width="400" height="300" src="<%= result.post_thumbnail %>" alt="...">
+                                                                <img hidden width="400" height="300" id="output_avatar" />
+
+                                                                <script>
+                                                                    var loadFile = function(event) {
+                                                                        var output = document.getElementById('output_avatar');
+                                                                        output.src = URL.createObjectURL(event.target.files[0]);
+                                                                        $('#thumbnail').hide();
+                                                                        $('#output_avatar').addClass('active-avatar');
+                                                                        $('#output_avatar').removeAttr('hidden');
+
+                                                                    };
+                                                                </script>
+
+                                                            </div>
+                                                            <button type="submit" class="btn btn-info">Submit</button>
+                                                    </form>
+                                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .animated -->
+                </div>
+                <!-- .content -->
+                <div class="clearfix"></div>
+
+                <% include ../layout/footer %>

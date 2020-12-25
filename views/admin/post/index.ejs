@@ -1,0 +1,91 @@
+<% include ../layout/header %>
+    <!-- Left Panel -->
+    <% include ../layout/menu %>
+        <!-- Right Panel -->
+        <div id="right-panel" class="right-panel">
+            <!-- Header-->
+            <% include ../layout/navbar %>
+                <!-- Content -->
+
+                <div class="content">
+                    <div class="animated fadeIn">
+
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>New Post</strong>
+                                    </div>
+
+                                    <% if(success_msg != ''){ %>
+                                        <div class="alert alert-success">
+                                            <%= success_msg%>
+                                        </div>
+                                        <% } %>
+                                            <% if(errors) { %>
+                                                <div class="alert alert-danger">
+                                                    <% errors.forEach(function(e){ %>
+                                                        <%= e.msg %> <br/>
+                                                            <%});%>
+                                                </div>
+                                                <% };%>
+                                                    <table width="100%" class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Title</th>
+                                                                <th>Content</th>
+                                                                <th>Categories</th>
+                                                                <th>Tags</th>
+                                                                <th>Thumbnail</th>
+                                                                <th>#</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% if(list) { list.forEach(item => { %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= item.post_title %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= item.post_content %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= item.post_categories.cate_title %>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= item.post_tags %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <img id="thumbnail" width="50" height="50" src="<%= item.post_thumbnail %>" alt="...">
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="./update/<%= item._id %>">
+                                                                            <li class="fa fa-pencil"></li>
+                                                                        </a> |
+                                                                        <a href="./delete/<%= item._id %>">
+                                                                            <li class="fa fa-trash"></li>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <% }) } else { %>
+                                                                    khong co du lieu
+                                                                    <% } %>
+                                                        </tbody>
+                                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .animated -->
+
+
+
+                <!-- .content -->
+                <div class="clearfix"></div>
+
+                <% include ../layout/footer %>
